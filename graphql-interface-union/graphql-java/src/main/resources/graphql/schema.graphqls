@@ -1,0 +1,33 @@
+type Query {
+    getProductDetails(id:String!): Product!
+    getCartResult: OrderCart!
+}
+
+
+interface Product {
+    id: ID!
+    name: String!
+    link: String!
+}
+
+type Clothing implements Product {
+    id: ID!
+    name: String!
+    link: String!
+    size:String!
+
+}
+
+type Food implements Product {
+    id: ID!
+    name: String!
+    link: String!
+    type: FoodType!
+}
+
+enum FoodType{
+    VEG
+    NONVEG
+}
+
+union OrderCart = Clothing | Food
