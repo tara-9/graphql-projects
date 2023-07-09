@@ -30,4 +30,10 @@ enum FoodType{
     NONVEG
 }
 
-union OrderCart = Clothing | Food
+type Recommendation {
+    id: ID!
+    name: String!
+    price:Int!
+}
+
+union OrderCart = Food | Clothing | Recommendation
