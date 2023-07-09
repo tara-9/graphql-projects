@@ -16,8 +16,7 @@ public class ProductService {
 
 
     public ProductService() {
-        this.products = Arrays.asList(new Clothing("product-1", "levis'shirt", "xyz", "s"), new Food("product-2","apple", "xyz", FoodType.VEG));
-        ;
+        this.products = Arrays.asList(new Clothing("product-1", "levis'shirt", "https://www.table.sample.org/lunch/shirt.php", "s"), new Food("product-2","apple", "https://town.sample.edu/tub/apple.html", FoodType.VEG));
     }
 
     public Product findProductById(String id) {
@@ -36,5 +35,9 @@ public class ProductService {
             .findFirst()
             .orElse(null);
 
+    }
+
+    public List<Product> getAllProducts() {
+        return products;
     }
 }

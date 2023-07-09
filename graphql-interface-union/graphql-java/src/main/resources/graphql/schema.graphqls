@@ -1,6 +1,6 @@
 type Query {
     getProductDetails(id:String!): Product!
-    getCartResult: OrderCart!
+    getCartResult: [OrderCart]!
 }
 
 
