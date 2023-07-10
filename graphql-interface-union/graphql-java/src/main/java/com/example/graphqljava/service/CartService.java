@@ -23,14 +23,16 @@ public class CartService {
     }
 
     public List<Object> getCartItems() {
-        // Creating a size parameter to simulate returning recommended product when cart is empty
+        // Creating a size parameter to simulate empty or non empty cart
         int size = (int) Math.round(Math.random());
         if(size == 0) {
+            // Cart is Empty
             Recommendation product = new Recommendation("product-45", "Nike's Snicker", 100);
             List<Object> recommendations = new ArrayList<>();
             recommendations.add(product);
             return recommendations;
         }
+        // Cart is nonempty
         else return cartItems;
 
     }
