@@ -112,3 +112,5 @@ query{
 }
 ```
 Although Here we have name field in every object types still we need to add it in every object types
+
+### A [Medium Post](https://medium.com/@taraprasad9090/graphql-interface-and-union-541a5d5edb54) link if you like to read it there
