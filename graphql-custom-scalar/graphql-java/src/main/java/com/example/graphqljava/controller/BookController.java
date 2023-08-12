@@ -13,6 +13,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
+import java.time.Instant;
 import java.util.Optional;
 
 
@@ -35,6 +36,11 @@ public class BookController {
         String currency = Optional.ofNullable(httpServletRequest.getHeader("currency")).orElse("");
         if(currency.equalsIgnoreCase("euro")) return bookService.updatePriceOfBook(id, price * 2);
         return bookService.updatePriceOfBook(id, price);
+    }
+
+    @MutationMapping
+    public Book updateBookPublishedDate(@Argument String id, @Argument Instant date) {
+        return bookService.updatePublishedDate(id, date);
     }
 
     @SchemaMapping

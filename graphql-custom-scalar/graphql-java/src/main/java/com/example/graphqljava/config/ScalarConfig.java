@@ -2,6 +2,7 @@ package com.example.graphqljava.config;
 
 import graphql.GraphQLContext;
 import graphql.execution.CoercedVariables;
+import graphql.language.StringValue;
 import graphql.language.Value;
 import graphql.schema.Coercing;
 import graphql.schema.CoercingParseLiteralException;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -34,12 +36,14 @@ public class ScalarConfig {
 
                 @Override
                 public Object parseValue(@NotNull Object input, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingParseValueException {
-                    return null;
+                    return LocalDate.parse((String) input).atStartOfDay(ZoneId.systemDefault()).toInstant();
                 }
 
                 @Override
                 public Object parseLiteral(@NotNull Value input, @NotNull CoercedVariables variables, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingParseLiteralException {
-                    return null;
+                    StringValue stringValue = (StringValue) input;
+                    LocalDate date = LocalDate.parse(stringValue.getValue());
+                    return date.atStartOfDay(ZoneId.systemDefault()).toInstant();
                 }
 
                 @Override

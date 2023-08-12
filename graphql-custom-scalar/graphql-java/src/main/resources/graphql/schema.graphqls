@@ -4,6 +4,7 @@ type Query {
 
 type Mutation {
     updateBookPrice(id:ID!, price:Int!) : Book!
+    updateBookPublishedDate(id:ID!, date:Date!): Book!
 }
 scalar Date
 

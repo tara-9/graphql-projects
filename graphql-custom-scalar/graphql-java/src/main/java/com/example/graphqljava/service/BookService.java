@@ -45,4 +45,13 @@ public class BookService {
         Optional.ofNullable(book).ifPresent(bok -> bok.setPrice(price));
         return book;
     }
+
+    public Book updatePublishedDate(String id, Instant date) {
+        Book book =  this.books.stream()
+                .filter(bok -> bok.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+        Optional.ofNullable(book).ifPresent(bok -> bok.setPublishedDate(date));
+        return book;
+    }
 }
