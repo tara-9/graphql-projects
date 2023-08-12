@@ -1,0 +1,23 @@
+type Query {
+    bookById(id: ID): Book!
+}
+
+type Mutation {
+    updateBookPrice(id:ID!, price:Int!) : Book!
+}
+scalar Date
+
+type Book {
+    id: ID!
+    name: String!
+    pageCount: Int!
+    price: Int!
+    author: Author!
+    publishedDate:Date!
+}
+
+type Author {
+    id: ID!
+    firstName: String!
+    lastName: String
+}
