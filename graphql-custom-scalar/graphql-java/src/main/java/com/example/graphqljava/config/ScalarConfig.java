@@ -29,26 +29,38 @@ public class ScalarConfig {
             .coercing(new Coercing() {
                 @Override
                 public Object serialize(@NotNull Object dataFetcherResult, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingSerializeException {
-                    Instant publishedTime = (Instant) dataFetcherResult;
-                    DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE.withZone(ZoneId.systemDefault());
-                    return formatter.format(publishedTime);
+                    try {
+                        Instant publishedTime = (Instant) dataFetcherResult;
+                        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE.withZone(ZoneId.systemDefault());
+                        return formatter.format(publishedTime);
+                    } catch (CoercingSerializeException exception) {
+                        throw new CoercingSerializeException("Invalid Input:"+exception.getMessage());
+                    }
                 }
 
                 @Override
                 public Object parseValue(@NotNull Object input, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingParseValueException {
-                    return LocalDate.parse((String) input).atStartOfDay(ZoneId.systemDefault()).toInstant();
+                    try{
+                        return LocalDate.parse((String) input).atStartOfDay(ZoneId.systemDefault()).toInstant();
+                    } catch (RuntimeException exception) {
+                        throw new CoercingParseValueException("Invalid Input:"+exception.getMessage());
+                    }
                 }
 
                 @Override
                 public Object parseLiteral(@NotNull Value input, @NotNull CoercedVariables variables, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingParseLiteralException {
-                    StringValue stringValue = (StringValue) input;
-                    LocalDate date = LocalDate.parse(stringValue.getValue());
-                    return date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+                    try {
+                        StringValue stringValue = (StringValue) input;
+                        LocalDate date = LocalDate.parse(stringValue.getValue());
+                        return date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+                    } catch (RuntimeException exception) {
+                        throw new CoercingParseLiteralException("Invalid Input:"+exception.getMessage());
+                    }
                 }
 
                 @Override
                 public @NotNull Value<?> valueToLiteral(@NotNull Object input, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) {
-                    return null;
+                    return new StringValue(input.toString());
                 }
             })
             .build();
