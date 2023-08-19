@@ -1,0 +1,21 @@
+type Subscription {
+    bookPrice(id:ID!):Book!
+}
+
+type  Query {
+    bookById(id: ID): Book!
+}
+
+type Book {
+    id: ID!
+    name: String!
+    pageCount: Int!
+    price: Int!
+    author: Author!
+}
+
+type Author {
+    id: ID!
+    firstName: String!
+    lastName: String
+}
